@@ -1,10 +1,13 @@
 import snscrape.modules.twitter as sntwitter
 import csv
 from datetime import date
-
 twitter_handles = ['Cristiano', 'alexmorgan13', 'CHARLESBARKLEY', 'terrellowens', 'thecooleyzone', 'RyanWhitney6', 'CaroWozniacki', 'ShawnJohnson', 'paulpierce34', 'AaronRodgers12', 'KimKardashian']
-start = '2010-12-25' #YYYY-MM-DD
-end = date.today() #YYYY-MM-DD
+start = '2010-12-25'
+end = date.today()
+file = open('output.csv', 'a+', encoding='utf-8',newline='')
+header = 'url, date, content, id, user, replyCount, retweetCount, likeCount, quoteCount, conversationId, lang, source, coordinates'
+file.write(header)
+file.close()
 for twitter_handle in twitter_handles:
     tweets = []
     print(twitter_handle)
