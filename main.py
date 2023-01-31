@@ -5,7 +5,7 @@ twitter_handles = ['Cristiano', 'alexmorgan13', 'CHARLESBARKLEY', 'terrellowens'
 start = '2010-12-25'
 end = date.today()
 file = open('output.csv', 'a+', encoding='utf-8',newline='')
-header = 'url, date, content, id, user, replyCount, retweetCount, likeCount, quoteCount, conversationId, lang, source, coordinates'
+header = 'url,date,content,id,user,replyCount,retweetCount,likeCount,quoteCount,conversationId,lang,source,coordinates,\n'
 file.write(header)
 file.close()
 for twitter_handle in twitter_handles:
