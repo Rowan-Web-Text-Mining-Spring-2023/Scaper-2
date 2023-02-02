@@ -2,6 +2,7 @@ import contractions
 import csv
 import re
 
+#Removes any emoji, takes arg(str)
 def remove_emojis(data):
     emoj = re.compile("["
         u"\U0001F600-\U0001F64F"  # emoticons
@@ -25,16 +26,29 @@ def remove_emojis(data):
                       "]+", re.UNICODE)
     return re.sub(emoj, '', data)
 
-
+many = []    #List to store all tweets after cleaning
+#Loop through all tweets in csv file
 with open('tweets.csv', encoding='utf-8') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
+    
+    #Checking line by line
     for row in reader:
+        new_row = []
+
+        #Checking each element of line
         for item in row:
-            item = item.lower()
-            item = contractions.fix(item)
-            item = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', 'xxhyperlink', item)
-            item = remove_emojis(item)
-            item = re.sub(r'@[A-Za-z0-9]+', 'xxhandle', item)
-            print(item)
+            item = item.lower()    #lowercases text
+            item = contractions.fix(item)    #removes contractions
+            item = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', 'xxhyperlink', item)     #removes hyperlinks
+            item = remove_emojis(item)      #removes emojis
+            item = re.sub(r'@[A-Za-z0-9]+', 'xxhandle', item)     #removes @handles
+            new_row.append(item)
+        print(new_row)
+        many.append(new_row)
+
+#Writes clean data to separate csv file
+with open('cleaned.csv', 'w', newline='', encoding='utf-8') as clean:
+    writer = csv.writer(clean)
+    writer.writerows(many)
 
 
