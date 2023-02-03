@@ -3,7 +3,7 @@ import csv
 from datetime import date
 
 #Scrape data from following handles
-twitter_handles = ['Cristiano', 'alexmorgan13', 'CHARLESBARKLEY', 'terrellowens', 'thecooleyzone', 'RyanWhitney6', 'CaroWozniacki', 'ShawnJohnson', 'paulpierce34', 'AaronRodgers12', 'KimKardashian']
+twitter_handles = ['Cristiano', 'alexmorgan13', 'CHARLESBARKLEY', 'terrellowens', 'thecooleyzone', 'RyanWhitney6', 'CaroWozniacki', 'ShawnJohnson', 'paulpierce34', 'AaronRodgers12', 'KimKardashian', 'Metallica', 'riotgames']
 
 #Define dates to look for tweets through
 start = '2010-12-25'
@@ -20,7 +20,7 @@ for twitter_handle in twitter_handles:
     tweets = []
     print(twitter_handle)   #Print current handle gathering tweets for
     query = "(from:{}) until:{} since:{}".format(twitter_handle, end, start)
-    limit = 200            #Max 200 tweets to grab
+    limit = 100            #Max 100 tweets to grab
 
     #Check to see if limit of tweets is reached, otherwise takes required data from tweet
     for tweet in sntwitter.TwitterSearchScraper(query).get_items():
