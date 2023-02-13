@@ -5,6 +5,7 @@ import demoji
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
 from unicodedata import normalize
 
 #Remove new lines from text
@@ -13,12 +14,18 @@ def remove_new_lines(value):
 
 nltk.download('stopwords')
 nltk.download('punkt')
-stops_en = set(stopwords.words('english'))   #list of stopwords
+
+stops_en = nltk.corpus.stopwords.words('english')
+
+ps = PorterStemmer()
+wnl = WordNetLemmatizer()
 
 #Adding extra stopwords
 with open('new_stops.txt') as file:
+    new_stops = []
     for line in file:
-        stops_en.add(line.strip())
+        new_stops.append(line.strip())
+    stops_en.extend(new_stops)
 
 #Remove stopworsd from sentence
 def remove_stopwords(value):
@@ -28,6 +35,14 @@ def remove_stopwords(value):
         if(word not in stops_en): 
             remove_stops = remove_stops + word + ' '
     return remove_stops
+
+#Stems input word
+def stemm(value):
+    sp = value.split()
+    tmp = ''
+    for word in sp:
+        tmp += wnl.lemmatize(word) + ' ' if wnl.lemmatize(word).endswith('e') else ps.stem(word) + ' '
+    return tmp
 
 many = []    #List to store all tweets after cleaning
 #Loop through all tweets in csv file
@@ -47,10 +62,11 @@ with open('tweets.csv', encoding='utf-8') as csv_file:
             item = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', 'xxhyperlink', item)     #removes hyperlinks
             item = demoji.replace(item, "")      #removes emojis
             item = re.sub(r'@[A-Za-z0-9_]+', 'xxhandle', item)     #removes @handles
-            if(i == 2):   #Only removes stopwords in content
+            if(i == 2):   #Only removes stopwords and stems in content
                 item = remove_stopwords(item)
                 t = normalize('NFKD', item).encode('ascii', 'ignore')
                 item = t.decode()
+                item = stemm(item)
             new_row.append(item)
             i = i + 1
         many.append(new_row)
