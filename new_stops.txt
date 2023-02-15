@@ -15,3 +15,6 @@ thru
 oh
 would
 could
+'s
+(
+)

@@ -14,6 +14,7 @@ def remove_new_lines(value):
 
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('wordnet')
 
 stops_en = nltk.corpus.stopwords.words('english')
 
@@ -36,12 +37,13 @@ def remove_stopwords(value):
             remove_stops = remove_stops + word + ' '
     return remove_stops
 
-#Stems input word
+#Stems input word, removes some overstemming issues
 def stemm(value):
     sp = value.split()
     tmp = ''
     for word in sp:
-        tmp += wnl.lemmatize(word) + ' ' if wnl.lemmatize(word).endswith('e') else ps.stem(word) + ' '
+        lem_word = wnl.lemmatize(word)
+        tmp += wnl.lemmatize(word) + ' ' if lem_word.endswith('e') or lem_word.endswith('ll') or lem_word.endswith('al') or lem_word.endswith('y') or lem_word.endswith('is') or lem_word.endswith('us') or lem_word.endswith('er') else ps.stem(word) + ' '
     return tmp
 
 many = []    #List to store all tweets after cleaning
