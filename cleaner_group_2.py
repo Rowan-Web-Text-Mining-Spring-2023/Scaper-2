@@ -22,7 +22,7 @@ ps = PorterStemmer()
 wnl = WordNetLemmatizer()
 
 #Adding extra stopwords
-with open('new_stops.txt') as file:
+with open('new_stops_group_2.txt') as file:
     new_stops = []
     for line in file:
         new_stops.append(line.strip())
@@ -43,12 +43,12 @@ def stemm(value):
     tmp = ''
     for word in sp:
         lem_word = wnl.lemmatize(word)
-        tmp += wnl.lemmatize(word) + ' ' if lem_word.endswith('e') or lem_word.endswith('ll') or lem_word.endswith('al') or lem_word.endswith('y') or lem_word.endswith('is') or lem_word.endswith('us') or lem_word.endswith('er') else ps.stem(word) + ' '
+        tmp += wnl.lemmatize(word) + ' ' if lem_word.endswith('ant') or lem_word.endswith('ion') or lem_word.endswith('e') or lem_word.endswith('ll') or lem_word.endswith('al') or lem_word.endswith('y') or lem_word.endswith('is') or lem_word.endswith('us') or lem_word.endswith('er') else ps.stem(word) + ' '
     return tmp
 
 many = []    #List to store all tweets after cleaning
 #Loop through all tweets in csv file
-with open('tweets.csv', encoding='utf-8') as csv_file:
+with open('all_tweets_group_2.csv', encoding='utf-8') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
     
     #Checking line by line
@@ -74,7 +74,7 @@ with open('tweets.csv', encoding='utf-8') as csv_file:
         many.append(new_row)
 
 #Writes clean data to separate csv file
-with open('cleaned.csv', 'w', newline='', encoding='utf-8') as clean:
+with open('cleaned_tweets_group_2.csv', 'w', newline='', encoding='utf-8') as clean:
     writer = csv.writer(clean)
     writer.writerows(many)
 
