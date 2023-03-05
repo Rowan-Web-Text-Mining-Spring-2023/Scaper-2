@@ -43,7 +43,7 @@ def stemm(value):
     tmp = ''
     for word in sp:
         lem_word = wnl.lemmatize(word)
-        tmp += wnl.lemmatize(word) + ' ' if lem_word.endswith('ant') or lem_word.endswith('ion') or lem_word.endswith('e') or lem_word.endswith('ll') or lem_word.endswith('al') or lem_word.endswith('y') or lem_word.endswith('is') or lem_word.endswith('us') or lem_word.endswith('er') else ps.stem(word) + ' '
+        tmp += wnl.lemmatize(word) + ' ' if lem_word.endswith('ant') or lem_word.endswith('ion') or lem_word.endswith('e') or lem_word.endswith('ll') or lem_word.endswith('al') or lem_word.endswith('y') or lem_word.endswith('is') or lem_word.endswith('us') or lem_word.endswith('er') or lem_word.endswith('ck') or lem_word.endswith('ting') or lem_word.endswith('ue') or lem_word.endswith('ion') else ps.stem(word) + ' '
     return tmp
 
 many = []    #List to store all tweets after cleaning
