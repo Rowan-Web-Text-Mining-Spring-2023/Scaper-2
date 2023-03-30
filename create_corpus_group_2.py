@@ -59,9 +59,5 @@ vectorizer = CountVectorizer(stop_words='english')
 X = vectorizer.fit_transform(to_tfidf)
 vector = pd.DataFrame(X.toarray(), columns=vectorizer.get_feature_names_out())
 
-#Setting up formatting
-vector.index.name = 'DOCUMENT_NUMBER'
-vector.index = vector.index + 1
-
 #Save tfidf vectors
-vector.to_csv('tfidf_vectors_group_2.csv')
+vector.to_csv('tf_vectors_group_2.csv', index=False)
